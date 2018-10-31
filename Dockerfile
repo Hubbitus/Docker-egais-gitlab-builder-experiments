@@ -18,7 +18,7 @@ RUN yum install -y \
 	python2-httpie \
 	python2*-pip \
 		&& yum clean all \
-	&& pip2 install docker-compose --upgrade `# unfortunately no rpm in EPEL repository`
+	&& pip2 install docker-compose==1.22.0 --upgrade `# unfortunately no rpm in EPEL repository`
 
 # First attempt workaround of https://gitlab.com/gitlab-org/gitlab-ce/issues/22299
 RUN sed -i.bak -- "s/OPTIONS='--selinux-enabled --log-driver=journald.*$/OPTIONS='--selinux-enabled --log-driver=journald --add-registry docreg.taskdata.work:5000'/" /etc/sysconfig/docker
