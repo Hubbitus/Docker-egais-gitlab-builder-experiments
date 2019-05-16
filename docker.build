@@ -1,1 +1,1 @@
-sudo docker build -t hubbitus/egais-gitlab-builder:fedora .g ch -b
+docker build -t hubbitus/egais-gitlab-builder:fedora-dockerce .
