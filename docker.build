@@ -1,1 +1,1 @@
-docker build -t hubbitus/egais-gitlab-builder:fedora-dockerce .
+/usr/bin/docker build -t hubbitus/egais-gitlab-builder:fedora-dockerce .
