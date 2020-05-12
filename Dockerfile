@@ -8,7 +8,7 @@ RUN apk --no-cache add git \
 	&& go get -u github.com/awslabs/amazon-ecr-credential-helper/ecr-login/cli/docker-credential-ecr-login
 
 #------------------------------------------
-FROM fedora:32
+FROM fedora:31
 
 LABEL MAINTAINER="Pavel Alexeev <Pahan@Hubbitus.info>"
 
