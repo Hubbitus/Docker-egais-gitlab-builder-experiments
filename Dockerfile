@@ -1,25 +1,32 @@
-# https://hub.docker.com/_/centos/
-FROM centos:latest
+# https://hub.docker.com/_/fedora
 
-LABEL MAINTAINER Pavel Alexeev <Pahan@Hubbitus.info>
+# Amazon ECR credential-helper
+# @see https://github.com/awslabs/amazon-ecr-credential-helper
+FROM golang:1.14.2-buster AS dependencies
 
-# Separate install to see repo enabled
-RUN yum install -y epel-release
+RUN go get -u github.com/awslabs/amazon-ecr-credential-helper/ecr-login/cli/docker-credential-ecr-login
+
+#------------------------------------------
+FROM fedora:31
+
+LABEL MAINTAINER="Pavel Alexeev <Pahan@Hubbitus.info>"
+
+COPY --from=dependencies /go/bin/docker-credential-ecr-login /usr/bin/
+
+RUN dnf install -y 'dnf-command(config-manager)' \
+	&& dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo \
+	&& dnf copr enable cerenit/helm -y \
+		&& dnf clean all
 
 # We don't fair it will be fat - it intended to start faster many times. So, single download time have no many sence.
-RUN yum install -y \
-	ansible \
-	docker \
-	java-1.8.0-openjdk-devel java-1.8.0-openjdk-headless \
-	ruby \
-	git \
-	jq \
-	iproute \
-	postgresql \
-	python2-httpie \
-	python2*-pip \
-		&& yum clean all \
-	&& pip2 install docker-compose==1.22.0 --upgrade `# unfortunately no rpm in EPEL repository`
-
-# First attempt workaround of https://gitlab.com/gitlab-org/gitlab-ce/issues/22299
-RUN sed -i.bak -- "s/OPTIONS='--selinux-enabled --log-driver=journald.*$/OPTIONS='--selinux-enabled --log-driver=journald --add-registry docreg.taskdata.work:5000'/" /etc/sysconfig/docker
+RUN dnf install -y \
+		docker-ce-cli containerd.io docker-compose \
+		kubernetes-client helm \
+		java-1.8.0-openjdk-devel java-1.8.0-openjdk-headless \
+		jq \
+		ruby \
+		git \
+		gzip which `# For sencha installer` \
+		httpie \
+		chromium \
+	&& dnf clean all
