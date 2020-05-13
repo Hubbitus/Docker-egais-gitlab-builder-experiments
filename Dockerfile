@@ -30,4 +30,3 @@ RUN dnf install -y \
 		httpie \
 		chromium \
 	&& dnf clean all
-
