@@ -8,8 +8,7 @@ It is intended to build `Java` `gradle` projects as backend and `Sencha` + `Reac
 
 Images docker hub: https://hub.docker.com/r/hubbitus/art
 
-
-# Main content
+## Main content
 Based on latest Fedora image and include next main packages:
  * `java-1.8.0-openjdk-devel` and `java-1.8.0-openjdk-headless` - as main language is java and `groovy` wrapper used
  * `ruby` - for use `SenchaCMD`
@@ -18,10 +17,16 @@ Based on latest Fedora image and include next main packages:
  * `docker`, `docker-compose`, `helm`, `kubernetes-client` - to up stack for testing like Gitlab [Review Apps](https://docs.gitlab.com/ee/ci/review_apps/)
  * `jq` - for Gitlab API processing
 
-# Addition
+## Addition
  * Also include [docker-credential-ecr-login](https://github.com/awslabs/amazon-ecr-credential-helper) for work with [ECR](https://aws.amazon.com/ecr/).
  * [epel-repo](https://fedoraproject.org/wiki/EPEL) enabled
  * Several packages for comfort work included also like:
     - `httpie`
     - `iproute`
     - `postgres` - console client
+
+# Development
+
+For local build image just run script `./local.build`. [buildah](https://buildah.io) used.
+But there also autobuilds by `docker` on official docker hub (see links at top
+).

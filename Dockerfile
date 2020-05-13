@@ -2,10 +2,9 @@
 
 # Amazon ECR credential-helper
 # @see https://github.com/awslabs/amazon-ecr-credential-helper
-FROM golang:1.9.1-alpine3.6 AS dependencies
+FROM golang:1.14.2-buster AS dependencies
 
-RUN apk --no-cache add git \
-	&& go get -u github.com/awslabs/amazon-ecr-credential-helper/ecr-login/cli/docker-credential-ecr-login
+RUN go get -u github.com/awslabs/amazon-ecr-credential-helper/ecr-login/cli/docker-credential-ecr-login
 
 #------------------------------------------
 FROM fedora:31
